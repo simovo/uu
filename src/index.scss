@@ -18,3 +18,21 @@ body {
     }
   }
 }
+
+.root{
+  &--loading {
+    &::after{
+      display: block;
+      position: fiexd;
+      content: "loading ....";
+      color : white;
+      background-color: #181818;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+  }
+
+}
