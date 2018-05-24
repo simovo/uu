@@ -65,7 +65,12 @@ async function indexPage() {
     pEl.addEventListener("click", e => {
       postContentPage(post.id);
     });
+
+
+   
+
     listFragment.querySelector(".post-list").appendChild(fragment);
+
   });
 
   render(listFragment);
@@ -89,15 +94,28 @@ if (localStorage.getItem('token')) {
     const commentsRes = await postAPI.get(`/posts/${postId}/comments`)
     commentsRes.data.forEach(comment => {
       const itemFragment = document.importNode(templates.commentItem, true);
-      itemFragment.querySelector(".comment-item__body").textContent = comment.body;
-      commentsFragment.querySelector('.comments__list').appendChild(itemFragment);
-    } )
+     const bodyEl = itemFragment.querySelector(".comment-item__body")
+    const removeEL =  itemFragment.querySelector(".comment-item__remove-btn")
+    bodyEl.textContent = comment.body
+     commentsFragment.querySelector('.comments__list').appendChild(itemFragment);
+      removeEL.addEventListener("click",async e  => {
+        bodyEl.remove()
+        removeEl = remove()
+        const res = await postAPI.delete(`/comments/${comment.id}`)
+
+      })
+    })
     const formEl = commentsFragment.querySelector(".comments__form")
     formEl.addEventListener("submit", async e => {
 const payload = {
   body : e.target.elements.body.value
 
+  
+    
+
 }
+
+
 
 const res = await postAPI.post(`/post/${postId}/comments`, payload)
 postContentPage(postId)
